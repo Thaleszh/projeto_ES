@@ -1,4 +1,3 @@
-
 class Class:
 
 #Atributes
@@ -38,6 +37,3 @@ creator
 
 	def checkCreator(user):
 		return creator == user
-
-     
-
