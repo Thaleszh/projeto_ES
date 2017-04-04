@@ -1,0 +1,4 @@
+mage
+OP
+spellcasting
+cantrip
