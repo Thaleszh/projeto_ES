@@ -1,4 +1,5 @@
 import os
+import shutil
 
 def createFile(text):
     fi = open(text + ".txt", "w+")
@@ -17,3 +18,9 @@ def readFile(name):
 
 def renameFile(old, new):
     os.rename(old + ".txt", new + ".txt")
+
+def copyFile(old, new):
+    shutil.copy2(old + ".txt", new + ".txt")
+
+def removeFile(name):
+    os.remove(name + ".txt")

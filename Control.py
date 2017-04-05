@@ -1,14 +1,15 @@
 import FileManager
+import Vision
 
 def addClass():
-    name = input("Class name: ")
+    name = Vision.entry("Class name: ")
     FileManager.createFile(name)
-    ability = input("Ability Description: ")
+    ability = Vision.entry("Ability Description: ")
     FileManager.writeFile(ability + "\n", name)
 
 def addAbility():
-    name = input("Class name: ")
-    ability = input("Ability Description: ")
+    name = Vision.entry("Class name: ")
+    ability = Vision.entry("Ability Description: ")
     FileManager.writeFile(ability+"\n", name)
 
 def addColaborator():
@@ -16,10 +17,19 @@ def addColaborator():
     FileManager.writeFile(name+"\n", name)
 
 def searchTag():
-    name = input("Class name: ")
+    name = Vision.entry("Class name: ")
     FileManager.readFile(name)
 
 def changeName():
-    old = input("Class name: ")
-    new = input("New Class Name: ")
+    old = Vision.entry("Class name: ")
+    new = Vision.entry("New Class Name: ")
     FileManager.renameFile(old, new)
+
+def duplicateClass():
+    old = Vision.entry("Class name: ")
+    new = Vision.entry("New Class Name: ")
+    FileManager.copyFile(old, new)
+
+def removeCLass():
+    name = Vision.entry("Class name: ")
+    FileManager.removeFile(name)
