@@ -11,15 +11,17 @@ def addClass():
 def addAbility():
     name = Vision.entry("Class name: ")
     tempClass = Persistencia.getClass(name)
-    abilityName = Vision.entry("Ability name: ")
-    abilityDescription = Vision.entry("Ability Description: ")
-    tempClass.addAbility(user, abilityName, abilityDescription)
+    keep = 1
+    while (keep == 1):
+        abilityName = Vision.entry("Ability name: ")
+        abilityDescription = Vision.entry("Ability Description: ")
+        tempClass.addAbility(user, abilityName, abilityDescription)
+        keep = int(Vision.entry("Do you wish to keep adding abilities?\n 1- Yes \n 2- No\n"))
     Persistencia.saveClass(tempClass)
 
 def addColaborator():
-    usr = User.name
-    FileManager.writeFile(name+"\n", name)
-
+    name = Vision.entry("Class name: ")
+    classe = Persistencia.getClass(name)
 def searchTag():
     name = Vision.entry("Class name: ")
     classe = Persistencia.getClass(name)
@@ -31,15 +33,20 @@ def displayClass(classe):
 		Vision.display(ability.getName()+": " + ability.getDescription())
 
 def changeName():
-    old = Vision.entry("Class name: ")
+    old = Vision.entry("Class to change name: ")
     new = Vision.entry("New Class Name: ")
-    FileManager.renameFile(old, new)
+    classe = Persistencia.getClass(old)
+    Persistencia.removeClass(classe)
+    classe.setName(new)
+    Persistencia.saveClass(classe)
 
 def duplicateClass():
-    old = Vision.entry("Class name: ")
+    old = Vision.entry("Name of the class to duplicate: ")
     new = Vision.entry("New Class Name: ")
-    FileManager.copyFile(old, new)
+    classe = Persistencia.getClass(old)
+    classe.setName(new)
+    Persistencia.saveClass(classe)
 
 def removeCLass():
-    name = Vision.entry("Class name: ")
-    FileManager.removeFile(name)
+    classe = Vision.entry("Name of the class to be deleted: ")
+    Persistencia.saveClass(classe)

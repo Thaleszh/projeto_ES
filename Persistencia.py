@@ -14,3 +14,6 @@ def getClass(name):
 			return classInList
 	return "notFound"
 
+def removeClass(name):
+	classes.remove(name)
+
