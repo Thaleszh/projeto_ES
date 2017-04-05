@@ -22,6 +22,7 @@ def addAbility():
 def addColaborator():
     name = Vision.entry("Class name: ")
     classe = Persistencia.getClass(name)
+
 def searchTag():
     name = Vision.entry("Class name: ")
     classe = Persistencia.getClass(name)

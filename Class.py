@@ -2,16 +2,13 @@ from Ability import Ability
 class Class:
 
 #Atributes
-	name = ""
-	tags = set()
-	edition = 0
-	colaborators = set()
-	abilities = list()
-	creator = 0
-
 	def __init__(self, name, user):
 		self.name = name
 		self.creator = user
+		self.tags = set()
+		self.edition = 0
+		self.colaborators = set()
+		self.abilities = list()
 
 #add a name
 	def setName(newName):
@@ -37,7 +34,7 @@ class Class:
 	def editAbility(self, user, abilityName, description):
 		if (self.checkPermition(user)):
 			ability = searchAbility(abilityName)
-			self.ability.setDescription(description)
+			ability.setDescription(description)
 
 	def delAbility(self, user, abilityName):
 		if (self.checkPermition(user)):
