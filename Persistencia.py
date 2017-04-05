@@ -2,13 +2,11 @@
 classes = list()
 
 def saveClass(classToAdd):
-	found = 0
-	for index, classInList in classes:
-		if classInList.getName() == classToAdd.getName(name):
-			classes[index] = classToAdd
-			found = 1
-	if found == 0:
+	classe = getClass(classToAdd)
+	if classe == "notFound":
 		classes.append(classToAdd)
+	else:
+		classes[index(classe)] = classToAdd
 
 def getClass(name):
 	for classInList in classes:

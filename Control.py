@@ -12,7 +12,7 @@ def addAbility():
     name = Vision.entry("Class name: ")
     tempClass = Persistencia.getClass(name)
     abilityName = Vision.entry("Ability name: ")
-    abilityDescription = Vision.entry("Ability Description:")
+    abilityDescription = Vision.entry("Ability Description: ")
     tempClass.addAbility(user, abilityName, abilityDescription)
     Persistencia.saveClass(tempClass)
 
@@ -26,9 +26,9 @@ def searchTag():
     displayClass(classe)
 
 def displayClass(classe):
-	Vision.display(classe.getName())
+	Vision.display("\nClasse - " + classe.getName() + ": \n--------------\nAbilites:")
 	for ability in classe.getAbilities():
-		Vision.display(ability.getname()+": " + ability.getdescription())
+		Vision.display(ability.getName()+": " + ability.getDescription())
 
 def changeName():
     old = Vision.entry("Class name: ")

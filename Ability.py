@@ -8,14 +8,14 @@ class Ability:
 		self.name = name
 		self.description = description
 
-	def setName(newName):
-		name = newName
+	def setName(self, newName):
+		self.name = newName
 
 	def getName(self):
 		return self.name
 
-	def setDescription(text):
-		description = text
+	def setDescription(self, text):
+		self.description = text
 
-	def getDescription():
-		return description
+	def getDescription(self):
+		return self.description

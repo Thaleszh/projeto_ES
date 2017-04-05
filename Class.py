@@ -11,7 +11,7 @@ class Class:
 
 	def __init__(self, name, user):
 		self.name = name
-		creator = user
+		self.creator = user
 
 #add a name
 	def setName(newName):
@@ -65,6 +65,9 @@ class Class:
 	def checkPermition(self, user):
 	    if(self.edition):
 	        return 1
+	    if (self.creator == user):
+	    	edition = 1
+	    	return 1
 	    if(user in self.colaborators):
 	    	edition = 1
 	    	return 1
