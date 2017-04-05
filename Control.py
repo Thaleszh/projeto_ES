@@ -1,16 +1,20 @@
-import FileManager
+from Class import Class
 import Vision
+import Persistencia
+user = 1
 
 def addClass():
     name = Vision.entry("Class name: ")
-    FileManager.createFile(name)
-    ability = Vision.entry("Ability Description: ")
-    FileManager.writeFile(ability + "\n", name)
+    newClass = Class(name, user)
+    Persistencia.saveClass(newClass)
 
 def addAbility():
     name = Vision.entry("Class name: ")
-    ability = Vision.entry("Ability Description: ")
-    FileManager.writeFile(ability+"\n", name)
+    tempClass = Persistencia.getClass(name)
+    abilityName = Vision.entry("Ability name: ")
+    abilityDescription = Vision.entry("Ability Description:")
+    tempClass.addAbility(user, abilityName, abilityDescription)
+    Persistencia.saveClass(tempClass)
 
 def addColaborator():
     usr = User.name
@@ -18,7 +22,13 @@ def addColaborator():
 
 def searchTag():
     name = Vision.entry("Class name: ")
-    FileManager.readFile(name)
+    classe = Persistencia.getClass(name)
+    displayClass(classe)
+
+def displayClass(classe):
+	Vision.display(classe.getName())
+	for ability in classe.getAbilities():
+		Vision.display(ability.getname()+": " + ability.getdescription())
 
 def changeName():
     old = Vision.entry("Class name: ")
