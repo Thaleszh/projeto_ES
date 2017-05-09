@@ -38,7 +38,7 @@ def changeName():
     old = Vision.entry("Class to change name: ")
     new = Vision.entry("New Class Name: ")
     classe = Persistencia.getClass(old)
-    Persistencia.removeClass(classe)
+    Persistencia.delClass(classe)
     classe.setName(new)
     Persistencia.saveClass(classe)
 
@@ -49,9 +49,9 @@ def duplicateClass():
     classe.setName(new)
     Persistencia.saveClass(classe)
 
-def removeCLass():
+def delClass():
     classe = Vision.entry("Name of the class to be deleted: ")
-    Persistencia.saveClass(classe)
+    Persistencia.delClass(classe)
 
 def createTable():
     name = Vision.entry("Table name: ")
