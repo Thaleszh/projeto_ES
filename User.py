@@ -79,4 +79,4 @@ class User:
     def checkPermition(self, user):
         if (self == user):
             return 1
-return 0
+        return 0
