@@ -69,8 +69,7 @@ def delTable():
     name = Vision.entry("Table name: ")
     Persistence.delTable(name)
 
-def editTable():
-    option = Vision.entry("\n1 - Add Character\n2 - Remove Character\n3 - Add PLayer\n4 - Remove Player\n5 - Open Table\n6 - Close Table\n7 - Quit\n")
+def editTable(option):
     cases[option]()
 
 def caseAddC():
