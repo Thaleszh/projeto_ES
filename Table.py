@@ -32,7 +32,7 @@ class Table:
             Vision.display("You are not the game master")
 
     def addCharacter(self, master, char):
-        if(self.checkPermition(master) and char.getCreator in self.players):
+        if(self.checkPermition(master) or char.getCreator in self.players):
             self.characters.append(char)
         else:
             Vision.display("You are not the game master or character invalid")

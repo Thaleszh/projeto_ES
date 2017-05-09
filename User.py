@@ -6,18 +6,18 @@ class User:
         self.tables = list()
         self.classes = list()
 
-    def getName():
+    def getName(self):
         return self.name
 
-    def setName(newName):
-        if (self.checkpermition(user)):
+    def setName(self, newName):
+        if (self.checkPermition(user)):
             self.name = newName
 
-    def getPassword():
+    def getPassword(self):
         return self.password
 
-    def setPassword(newPass):
-        if (self.checkpermition(user)):      
+    def setPassword(self, newPass):
+        if (self.checkPermition(user)):
             self.password = newPass
 
 # get classe
@@ -25,17 +25,17 @@ class User:
         return self.classes
 
     def setClasses(self, user, newClasses):
-        if (self.checkpermition(user)):
+        if (self.checkPermition(user)):
             self.classes = newClasses
 
     def addClass(self, user, newClass):
-        if (self.checkpermition(user)):
-            if newClass not in self.classes: 
+        if (self.checkPermition(user)):
+            if newClass not in self.classes:
                 self.classes.append(newClass)
 
     def delClass(self, user, oldClass):
-        if (self.checkpermition(user)):
-            if oldClass in self.classes: 
+        if (self.checkPermition(user)):
+            if oldClass in self.classes:
                 self.classes.remove(oldClass)
 
 # get table
@@ -43,17 +43,17 @@ class User:
         return self.tables
 
     def setTables(self, user, newTables):
-        if (self.checkpermition(user)):
+        if (self.checkPermition(user)):
             self.tables = newTables
 
     def addTable(self, user, newTable):
-        if (self.checkpermition(user)):
-            if newTable not in self.tables: 
+        if (self.checkPermition(user)):
+            if newTable not in self.tables:
                 self.tables.append(newTable)
 
     def delTable(self, user, oldTable):
-        if (self.checkpermition(user)):
-            if oldTable in self.tables: 
+        if (self.checkPermition(user)):
+            if oldTable in self.tables:
                 self.tables.remove(oldTable)
 
 # get characters
@@ -61,19 +61,24 @@ class User:
         return self.characters
 
     def setCharacters(self, user, newCharacters):
-        if (self.checkpermition(user)):
+        if (self.checkPermition(user)):
             self.characters = newCharacters
 
     def addCharacter(self, user, newCharacter):
-        if (self.checkpermition(user)):
-            if newCharacters not in self.characters: 
-                self.characters.append(newCharacters)
+        if (self.checkPermition(user)):
+            if newCharacter not in self.characters:
+                self.characters.append(newCharacter)
 
     def delCharacter(self, user, oldCharacter):
-        if (self.checkpermition(user)):
-            if oldCharacter in self.characters: 
+        if (self.checkPermition(user)):
+            if oldCharacter in self.characters:
                 self.characters.remove(oldCharacter)
 
+    def getCharacter(self, name):
+    	for character in self.characters:
+    		if character.getName() == name:
+    			return character
+    	return "notFound"
 
 # check permition
     def checkPermition(self, user):

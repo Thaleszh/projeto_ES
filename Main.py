@@ -14,7 +14,7 @@ while True:
     elif x == 4:
         Control.createTable()
     elif x == 5:
-        Control.createCharacter()
+        Control.addCharacter()
     elif x == 6:
         Control.editTable()
     else:

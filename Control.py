@@ -1,9 +1,15 @@
 from Class import Class
 from Table import Table
+from User import User
+from Character import Character
+
 import Vision
 import Persistence
-from User import User
+
 user = User('nome', 'guest')
+clas = Class('wiz', user)
+Persistence.saveClass(clas)
+Persistence.saveUser(user)
 
 def addClass():
     name = Vision.entry("Class name: ")
@@ -135,3 +141,19 @@ def editLog():
         log = Vision.entry("Type the new log: ")
         table.setLore(log)
         Persistence.saveTable(table)
+
+def addCharacter():
+    name = Vision.entry("Character name: ")
+    className = Vision.entry("Character class: ")
+    clas = Persistence.getClass(className)
+    char = Character(name, clas, user)
+    user.addCharacter(user, char)
+    Persistence.saveUser(user)
+    Persistence.saveCharacter(char)
+
+def delCharacter():
+    name = Vision.entry("Character name: ")
+    char = user.getCharacter(name)
+    user.delCharacter(user, char)
+    Persistence.delCharacter(char)
+    Persistence.saveUser(user)
