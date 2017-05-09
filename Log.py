@@ -1,15 +1,16 @@
 class Log:
-Description = ""
-Name = ""
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
 
-def getName():
-    return Name
+    def getName():
+        return self.name
 
-def setName(newName):
-    Name = newName
+    def setName(newName):
+        self.name = newName
 
-def getDescription():
-    return Description
+    def getDescription():
+        return self.description
 
-def setDescription(newDescription):
-    Description = newDescription
+    def setDescription(newDescription):
+        self.description = newDescription
