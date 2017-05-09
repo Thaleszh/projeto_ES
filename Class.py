@@ -11,12 +11,20 @@ class Class:
 		self.abilities = list()
 
 #add a name
-	def setName(self, newName):
+	def setName(self, user, newName):
 		if (self.checkPermition(user)):
 			self.name = newName
 
 	def getName(self):
 		return self.name
+
+#add a player
+	def setCreator(self, user, newCreator):
+		if (self.checkPermition(user)):
+			self.creator = newCreator
+
+	def getCreator(self):
+		return self.creator
 
 #add a tag
 	def addTag(self, user, tag):
