@@ -16,12 +16,20 @@ class Character:
         self.experience = 0
 
 #add a name
-    def setName(self, newName):
+    def setName(self, user, newName):
         if (self.checkPermition(user)):
             self.name = newName
 
     def getName(self):
         return self.name
+
+#add a player
+    def setCreator(self, user, newCreator):
+        if (self.checkPermition(user)):
+            self.creator = newCreator
+
+    def getCreator(self):
+        return self.creator
 
 #add a tag
     def addTag(self, user, tag):
@@ -36,7 +44,7 @@ class Character:
         return tags
 
 #change atributes
-    def setAtributes(self, atributes):
+    def setAtributes(self, user, atributes):
         if (self.checkPermition(user)):
             self.atributes = atributes
 
@@ -44,45 +52,45 @@ class Character:
         return self.atributes
 
 #change experience
-    def setExperience(self, value):
+    def setExperience(self, user, value):
         if (self.checkPermition(user)):
             self.experience = value
 
     def getExperience(self):
         return self.experience
 
-    def addExperience(self, value):
+    def addExperience(self, user, value):
         if (self.checkPermition(user)):
             self.experience += value
 
 #modify inventory
 
-    def setInventory(self, newIventory):
+    def setInventory(self, user, newIventory):
         if (self.checkPermition(user)):
             self.inventory = newIventory
 
     def getInventory(self):
         return self.inventory
 
-    def addItem(self, item):
+    def addItem(self, user, item):
         if (self.checkPermition(user)):
             self.inventory.append(item)
 
 #change level
 
-    def setLevel(self, value):
+    def setLevel(self, user, value):
         if (self.checkPermition(user)):
             self.level = value
 
     def getLevel(self):
         return self.level
 
-    def gainLevel(self):
+    def gainLevel(self, user):
         if (self.checkPermition(user)):
             self.level += 1
 
 #description
-    def setDescription(self, text):
+    def setDescription(self, user, text):
         if (self.checkPermition(user)):
             self.description = text
 
@@ -102,7 +110,7 @@ class Character:
         return 0
 
     def close(self):
-        self.edition = 1
+        self.edition = 0
 
     def checkCreator(self, user):
         return self.creator == user
