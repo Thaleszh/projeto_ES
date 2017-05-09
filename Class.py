@@ -11,8 +11,9 @@ class Class:
 		self.abilities = list()
 
 #add a name
-	def setName(newName):
-		self.name = newName
+	def setName(self, newName):
+		if (self.checkPermition(user)):
+			self.name = newName
 
 	def getName(self):
 		return self.name
@@ -72,3 +73,6 @@ class Class:
 
 	def checkCreator(self, user):
 		return self.creator == user
+
+    def close(self):
+        self.edition = 1
