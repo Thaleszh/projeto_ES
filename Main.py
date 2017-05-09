@@ -17,10 +17,10 @@ while True:
         Control.addCharacter()
     elif x == 6:
         while True:
-            y = int(Vision.entry("\n1 - Add Character\n2 - Remove Character\n"+
+            y = Vision.entry("\n1 - Add Character\n2 - Remove Character\n"+
                                  "3 - Add PLayer\n4 - Remove Player\n5 - Open Table\n"+
-                                 "6 - Close Table\n7 - Quit Table\n8 - Exit\n"))
-            if y > 7:
+                                 "6 - Close Table\n7 - Quit Table\n8 - Exit\n")
+            if int(y) > 7:
                 break
             Control.editTable(y)
     else:
