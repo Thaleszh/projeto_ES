@@ -70,3 +70,21 @@ def delTable(name):
 		if tables.getName() == name:
 			tables.remove(table)
 			break
+
+def getCharacter(name):
+	for character in characters:
+		if character.getName() == name:
+			return character
+	return "notFound"
+
+def saveCharacter(character):
+	if character not in characters:
+		characters.append(character)
+	else:
+		characters[characters.index(character)] = character
+
+def delCharacter(name):
+	for character in characters:
+		if characters.getName() == name:
+			characters.remove(character)
+			break
