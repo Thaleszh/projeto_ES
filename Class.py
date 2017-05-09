@@ -72,10 +72,10 @@ class Class:
 	    if(self.edition):
 	        return 1
 	    if (self.creator == user):
-	    	edition = 1
+	    	self.edition = 1
 	    	return 1
 	    if(user in self.colaborators):
-	    	edition = 1
+	    	self.edition = 1
 	    	return 1
 	    return 0
 
