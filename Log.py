@@ -1,3 +1,4 @@
+class Log:
 Description = ""
 Name = ""
 
