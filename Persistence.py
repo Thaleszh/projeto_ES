@@ -3,13 +3,13 @@ classes = list()
 characters = list()
 tables = list()
 openTables = list()
+users = list()
 
 def saveClass(classToAdd):
-	classe = getClass(classToAdd.getName())
-	if classe == "notFound":
+	if classToAdd not in classes:
 		classes.append(classToAdd)
 	else:
-		classes[classes.index(classe)] = classToAdd
+		classes[classes.index(classToAdd)] = classToAdd
 
 def getClass(name):
 	for classInList in classes:
@@ -23,16 +23,33 @@ def delClass(name):
 			classes.remove(classInList)
 			break
 
+def saveUser(userToAdd):
+	if userToAdd not in users:
+		users.append(userToAdd)
+	else:
+		users[users.index(userToAdd)] = userToAdd
+
+def getUser(name):
+	for user in users:
+		if user.getName() == name:
+			return user
+	return "notFound"
+
+def delUser(name):
+	for user in users:
+		if users.getName() == name:
+			users.remove(user)
+			break
+
 def addOpenTable(table):
-	table = getTable(table.getName())
-	if table == "notFound":
+	if table not in openTables:
 		openTables.append(table)
 	else:
 		openTables[openTables.index(table)] = table
 
 def delOpenTable(name):
 	for table in openTables:
-		if openTables.getName() == name:
+		if table.getName() == name:
 			openTables.remove(table)
 			break
 
@@ -43,8 +60,7 @@ def getTable(name):
 	return "notFound"
 
 def saveTable(table):
-	table = getTable(table.getName())
-	if table == "notFound":
+	if table not in tables:
 		tables.append(table)
 	else:
 		tables[tables.index(table)] = table

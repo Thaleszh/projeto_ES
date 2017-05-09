@@ -2,8 +2,8 @@ from Class import Class
 from Table import Table
 import Vision
 import Persistence
-import User
-user = 1
+from User import User
+user = User('nome', 'guest')
 
 def addClass():
     name = Vision.entry("Class name: ")
@@ -39,7 +39,7 @@ def changeName():
     old = Vision.entry("Class to change name: ")
     new = Vision.entry("New Class Name: ")
     classe = Persistence.getClass(old)
-    Persistence.removeClass(classe)
+    Persistence.delClass(classe)
     classe.setName(new)
     Persistence.saveClass(classe)
 
@@ -50,9 +50,9 @@ def duplicateClass():
     classe.setName(new)
     Persistence.saveClass(classe)
 
-def removeCLass():
+def delClass():
     classe = Vision.entry("Name of the class to be deleted: ")
-    Persistence.saveClass(classe)
+    Persistence.delClass(classe)
 
 def createTable():
     name = Vision.entry("Table name: ")

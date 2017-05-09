@@ -10,28 +10,28 @@ class Table:
         self.characters = list()
         self.edition = 0
 
-    def addPlayer(master, player):
+    def addPlayer(self, master, player):
         if(self.checkPermition(master)):
             self.players.append(player)
         else:
             Vision.display("You are not the game master")
 
-    def delPlayer(master, player):
+    def delPlayer(self, master, player):
         if(self.checkPermition(master)):
             self.players.remove(player)
         else:
             Vision.display("You are not the game master")
 
-    def quit(player):
+    def quit(self, player):
         self.player.remove(player)
 
-    def delCharacter(master, char):
+    def delCharacter(self, master, char):
         if(self.checkPermition(master)):
             self.characters.remove(char)
         else:
             Vision.display("You are not the game master")
 
-    def addCharacter(master, char):
+    def addCharacter(self, master, char):
         if(self.checkPermition(master) and char.getCreator in self.players):
             self.characters.append(char)
         else:
@@ -45,7 +45,7 @@ class Table:
             return 1
         return 0
 
-    def close():
+    def close(self):
         self.edition = 0
 
     def getName(self):
