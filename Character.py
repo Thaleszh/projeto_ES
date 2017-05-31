@@ -64,6 +64,10 @@ class Character:
         if (self.checkPermition(user)):
             self.experience += value
 
+    def loseExperience(self, user, value):
+        if (self.checkPermition(user)):
+            self.experience -= value
+
 #modify inventory
 
     def setInventory(self, user, newIventory):
@@ -75,6 +79,10 @@ class Character:
 
     def addItem(self, user, item):
         if (self.checkPermition(user)):
+            self.inventory.append(item)
+
+    def delItem(self, user, item):
+        if(self.checkPermition(user)):
             self.inventory.append(item)
 
 #change level
@@ -89,6 +97,10 @@ class Character:
     def gainLevel(self, user):
         if (self.checkPermition(user)):
             self.level += 1
+
+    def loseLevel(self, user):
+        if (self.checkPermition(user)):
+            self.level -= 1
 
 #description
     def setDescription(self, user, text):

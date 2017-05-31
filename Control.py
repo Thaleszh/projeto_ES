@@ -6,7 +6,7 @@ from Character import Character
 import Vision
 import Persistence
 
-user = User('nome', 'guest')
+user = User('user', 'guest')
 clas = Class('wiz', user)
 Persistence.saveClass(clas)
 Persistence.saveUser(user)
@@ -60,6 +60,7 @@ def delClass():
     classe = Vision.entry("Name of the class to be deleted: ")
     Persistence.delClass(classe)
 
+#Table
 def createTable():
     name = Vision.entry("Table name: ")
     newTable = Table(name, user)
@@ -72,6 +73,7 @@ def delTable():
 def editTable(option):
     cases[option]()
 
+# cases Manage Table
 def caseAddC():
     name = Vision.entry("Table name: ")
     table = Persistence.getTable(name)
@@ -122,7 +124,9 @@ def caseQuit():
     table = Persistence.getTable(name)
     table.quit(player)
 
-cases = {'1' : caseAddC, '2' : caseDelC, '3' : caseAddP, '4' : caseDelP, '5' : caseOpen, '6' : caseClose, '7' : caseQuit}
+cases = {'1' : caseAddC, '2' : caseDelC, '3' : caseAddP, '4' : caseDelP, '5' : caseOpen, '6' : caseClose}
+
+#Logs
 
 def editLog():
     name = Vision.entry("Table name: ")
@@ -141,6 +145,8 @@ def editLog():
         table.setLore(log)
         Persistence.saveTable(table)
 
+#Character
+
 def addCharacter():
     name = Vision.entry("Character name: ")
     className = Vision.entry("Character class: ")
@@ -156,3 +162,26 @@ def delCharacter():
     user.delCharacter(user, char)
     Persistence.delCharacter(char)
     Persistence.saveUser(user)
+
+#Cases Manage Character
+
+def caseUp():
+    Character.gainLevel(user)
+
+def caseDown():
+    Character.loseLevel(user)
+
+def caseGainXP(user, number):
+    Character.addExperience(number)
+
+def caseLoseXp(user, number):
+    Character.loseExperience(number)
+
+def caseAddInv(item):
+    Character.addItem(user, item)
+
+def caseRemInv(item):
+    Character.delItem(user, item)
+
+def caseShowInv():
+    Character.getInventory()
