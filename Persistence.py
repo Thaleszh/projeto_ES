@@ -1,4 +1,3 @@
-
 classes = list()
 characters = list()
 tables = list()
@@ -57,7 +56,7 @@ def getTable(name):
 	for table in tables:
 		if table.getName() == name:
 			return table
-	return "notFound"
+##	return "notFound"
 
 def saveTable(table):
 	if table not in tables:
@@ -67,7 +66,7 @@ def saveTable(table):
 
 def delTable(name):
 	for table in tables:
-		if tables.getName() == name:
+		if table.getName() == name:
 			tables.remove(table)
 			break
 

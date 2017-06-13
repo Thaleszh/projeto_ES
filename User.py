@@ -78,7 +78,7 @@ class User:
     	for character in self.characters:
     		if character.getName() == name:
     			return character
-    	return "notFound"
+    	##return "notFound"
 
 # check permition
     def checkPermition(self, user):

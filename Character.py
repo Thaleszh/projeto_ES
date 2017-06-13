@@ -83,7 +83,7 @@ class Character:
 
     def delItem(self, user, item):
         if(self.checkPermition(user)):
-            self.inventory.append(item)
+            self.inventory.remove(item)
 
 #change level
 

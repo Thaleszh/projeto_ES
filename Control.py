@@ -6,127 +6,96 @@ from Character import Character
 import Vision
 import Persistence
 
-user = User('user', 'guest')
-clas = Class('wiz', user)
-Persistence.saveClass(clas)
-Persistence.saveUser(user)
-
-def addClass():
+def addClass(currentUser):
     name = Vision.entry("Class name: ")
-    newClass = Class(name, user)
+    newClass = Class(name, currentUser)
     Persistence.saveClass(newClass)
 
-def addAbility():
-    name = Vision.entry("Class name: ")
-    tempClass = Persistence.getClass(name)
+def addAbility(currentClass):
     keep = 1
     while (keep == 1):
         abilityName = Vision.entry("Ability name: ")
         abilityDescription = Vision.entry("Ability Description: ")
-        tempClass.addAbility(user, abilityName, abilityDescription)
+        currentClass.addAbility(currentUser, abilityName, abilityDescription)
         keep = int(Vision.entry("Do you wish to keep adding abilities?\n 1- Yes \n 2- No\n"))
-    Persistence.saveClass(tempClass)
+    Persistence.saveClass(currentClass)
 
-def addColaborator():
-    name = Vision.entry("Class name: ")
-    classe = Persistence.getClass(name)
-
-def searchTag():
-    name = Vision.entry("Class name: ")
-    classe = Persistence.getClass(name)
-    displayClass(classe)
-
-def displayClass(classe):
-	Vision.display("\nClasse - " + classe.getName() + ": \n--------------\nAbilites:")
-	for ability in classe.getAbilities():
+def displayClass(currentClass):
+	Vision.display("\nClasse - " + currentClass.getName() + ": \n--------------\nAbilites:")
+	for ability in currentClass.getAbilities():
 		Vision.display(ability.getName()+": " + ability.getDescription())
 
 def changeName():
     old = Vision.entry("Class to change name: ")
     new = Vision.entry("New Class Name: ")
-    classe = Persistence.getClass(old)
-    Persistence.delClass(classe)
-    classe.setName(new)
-    Persistence.saveClass(classe)
+    currentClass = Persistence.getClass(old)
+    Persistence.delClass(currentClass)
+    currentClass.setName(new)
+    Persistence.saveClass(currentClass)
 
 def duplicateClass():
     old = Vision.entry("Name of the class to duplicate: ")
     new = Vision.entry("New Class Name: ")
-    classe = Persistence.getClass(old)
-    classe.setName(new)
-    Persistence.saveClass(classe)
+    currentClass = Persistence.getClass(old)
+    currentClass.setName(new)
+    Persistence.saveClass(currentClass)
 
 def delClass():
-    classe = Vision.entry("Name of the class to be deleted: ")
-    Persistence.delClass(classe)
+    currentClass = Vision.entry("Name of the class to be deleted: ")
+    Persistence.delClass(currentClass)
 
 #Table
-def createTable():
+def createTable(currentUser):
     name = Vision.entry("Table name: ")
-    newTable = Table(name, user)
+    newTable = Table(name, currentUser)
     Persistence.saveTable(newTable)
 
 def delTable():
     name = Vision.entry("Table name: ")
     Persistence.delTable(name)
 
-def editTable(option):
-    cases[option]()
+def editTable(option, currentTable):
+    caseManageTable[option](currentTable)
 
 # cases Manage Table
-def caseAddC():
-    name = Vision.entry("Table name: ")
-    table = Persistence.getTable(name)
+def caseAddC(currentTable):
     playerName = Vision.entry("Player name: ")
     player = Persistence.getUser(playerName)
     charName = Vision.entry("Character name: ")
     char = player.getCharacter(charName)
-    table.addCharacter(user, char)
-    Persistence.saveTable(table)
+    table.addCharacter(currentUser, char)
+    Persistence.saveTable(currentTable)
 
-def caseDelC():
-    name = Vision.entry("Table name: ")
-    table = Persistence.getTable(name)
+def caseDelC(currentTable):
     playerName = Vision.entry("Player name: ")
     player = Persistence.getUser(playerName)
     charName = Vision.entry("Character name: ")
     char = player.getCharacter(charName)
-    table.delCharacter(user, char)
-    Persistence.saveTable(table)
+    currentTable.delCharacter(currentUser, char)
+    Persistence.saveTable(currentTable)
 
-def caseAddP():
-    name = Vision.entry("Table name: ")
-    table = Persistence.getTable(name)
+def caseAddP(currentTable):
     playerName = Vision.entry("Player name: ")
     player = Persistence.getUser(playerName)
-    table.addPlayer(user, player)
-    Persistence.saveTable(table)
+    currentTable.addPlayer(currentUser, player)
+    Persistence.saveTable(currentTable)
 
-def caseDelP():
-    name = Vision.entry("Table name: ")
-    table = Persistence.getTable(name)
+def caseDelP(currentTable):
     playerName = Vision.entry("Player name: ")
     player = Persistence.getUser(playerName)
-    table.delPlayer(user, player)
-    Persistence.saveTable(table)
+    currentTable.delPlayer(currentUser, player)
+    Persistence.saveTable(currentTable)
 
-def caseOpen():
-    name = Vision.entry("Table name: ")
-    table = Persistence.getTable(name)
+def caseOpen(currentTable):
+    name = currentTable.getName()
     Persistence.addOpenTable(table)
 
-def caseClose():
-    name = Vision.entry("Table name: ")
+def caseClose(currentTable):
+    name = currentTable.getName()
     Persistence.delOpenTable(name)
 
-def caseQuit():
-    name = Vision.entry("Table name: ")
-    table = Persistence.getTable(name)
-    table.quit(player)
-
-cases = {'1' : caseAddC, '2' : caseDelC, '3' : caseAddP, '4' : caseDelP, '5' : caseOpen, '6' : caseClose}
-
-#Logs
+def caseQuit(currentTable):
+    currentTable.quit(player)
 
 def editLog():
     name = Vision.entry("Table name: ")
@@ -145,43 +114,58 @@ def editLog():
         table.setLore(log)
         Persistence.saveTable(table)
 
+caseManageTable = {'1' : caseAddC, '2' : caseDelC, '3' : caseAddP, '4' : caseDelP, '5' : caseOpen, '6' : caseClose, '7' : editLog}
+
 #Character
 
-def addCharacter():
+def addCharacter(currentUser):
     name = Vision.entry("Character name: ")
-    className = Vision.entry("Character class: ")
-    clas = Persistence.getClass(className)
-    char = Character(name, clas, user)
-    user.addCharacter(user, char)
-    Persistence.saveUser(user)
+    className = Vision.entry("Character Class: ")
+    currentClass = Persistence.getClass(currentClassName)
+    char = Character(name, currentClass, currentUser)
+    currentUser.addCharacter(currentUser, char)
+    Persistence.saveUser(currentUser)
     Persistence.saveCharacter(char)
 
 def delCharacter():
     name = Vision.entry("Character name: ")
-    char = user.getCharacter(name)
-    user.delCharacter(user, char)
+    char = currentUser.getCharacter(name)
+    currentUser.delCharacter(currentUser, char)
     Persistence.delCharacter(char)
-    Persistence.saveUser(user)
+    Persistence.saveUser(currentUser)
+
+def editCharacter(option):
+    caseManageCharacter[option](currentChar)
 
 #Cases Manage Character
 
-def caseUp():
-    Character.gainLevel(user)
+def caseUp(currentChar, currentUser):
+    currentChar.gainLevel(currentUser)
+    Persistence.saveCharacter(currentChar)
 
-def caseDown():
-    Character.loseLevel(user)
+def caseDown(currentChar, currentUser):
+    currentChar.loseLevel(currentUser)
+    Persistence.saveCharacter(currentChar)
 
-def caseGainXP(user, number):
-    Character.addExperience(number)
+def caseGainXP(currentChar, currentUser, number):
+    currentChar.addExperience(number)
+    Persistence.saveCharacter(currentChar)
 
-def caseLoseXp(user, number):
-    Character.loseExperience(number)
+def caseLoseXp(currentChar, currentUser, number):
+    currentChar.loseExperience(number)
+    Persistence.saveCharacter(currentChar)
 
-def caseAddInv(item):
-    Character.addItem(user, item)
+def caseAddInv(currentChar, currentUser, item):
+    currentChar.addItem(currentUser, item)
+    Persistence.saveCharacter(currentChar)
 
-def caseRemInv(item):
-    Character.delItem(user, item)
+def caseRemInv(currentChar, currentUser, item):
+    currentChar.delItem(currentUser, item)
+    Persistence.saveCharacter(currentChar)
 
 def caseShowInv():
-    Character.getInventory()
+    Inv = Character.getInventory()
+    for item in Inv:
+        Visio.display(item)
+
+caseManageCharacter = {'1' : caseUp, '2' : caseDown, '3' : caseGainXP, '4' : caseLoseXp, '5' : caseShowInv, '6' : caseAddInv, '7' : caseRemInv}
