@@ -58,7 +58,7 @@ class Table:
         self.log = newLog
 
     def getLore(self):
-        return self.lore()
+        return self.lore
 
     def setLore(self, newLore):
         self.lore = newLore

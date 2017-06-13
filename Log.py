@@ -3,14 +3,14 @@ class Log:
         self.name = name
         self.description = description
 
-    def getName():
+    def getName(self):
         return self.name
 
-    def setName(newName):
+    def setName(self, newName):
         self.name = newName
 
-    def getDescription():
+    def getDescription(self):
         return self.description
 
-    def setDescription(newDescription):
+    def setDescription(self, newDescription):
         self.description = newDescription

@@ -97,22 +97,22 @@ def caseClose(currentTable):
 def caseQuit(currentTable):
     currentTable.quit(player)
 
-def editLog():
-    name = Vision.entry("Table name: ")
-    table = Persistence.getTable(name)
-    option = Vision.entry("\n1 - Edit Lore\n2 - Edit Log\n")
-    if option == 1:
-        lore = table.getLore()
-        Vision.display(lore)
-        lore = Vision.entry("Type the new lore: ")
-        table.setLore(lore)
-        Persistence.saveTable(table)
+def editLog(currentTable):
+    option = Vision.entry("\n1 - Edit Lore \n2 - Show Lore\n3 - Edit Log\n4 - Show Log\n")
+    if int(option) <= 2:
+        lore = currentTable.getLore()
+        Vision.display(lore.getDescription())
+        if int(option) == 1:
+            lore.setDescription(Vision.entry("Type the new lore: "))
+            currentTable.setLore(lore)
+            Persistence.saveTable(currentTable)
     else:
-        log = table.getLog()
-        Vision.display(log)
-        log = Vision.entry("Type the new log: ")
-        table.setLore(log)
-        Persistence.saveTable(table)
+        log = currentTable.getLog()
+        Vision.display(log.getDescription())
+        if int(option) == 3:
+            log.setDescription(Vision.entry("Type the new log: "))
+            currentTable.setLore(log)
+            Persistence.saveTable(currentTable)
 
 caseManageTable = {'1' : caseAddC, '2' : caseDelC, '3' : caseAddP, '4' : caseDelP, '5' : caseOpen, '6' : caseClose, '7' : editLog}
 
@@ -127,15 +127,15 @@ def addCharacter(currentUser):
     Persistence.saveUser(currentUser)
     Persistence.saveCharacter(char)
 
-def delCharacter():
+def delCharacter(currentUser):
     name = Vision.entry("Character name: ")
     char = currentUser.getCharacter(name)
     currentUser.delCharacter(currentUser, char)
     Persistence.delCharacter(char)
     Persistence.saveUser(currentUser)
 
-def editCharacter(option):
-    caseManageCharacter[option](currentChar)
+def editCharacter(option, currentChar, currentUser, item):
+    caseManageCharacter[option](currentChar, currentUser, item)
 
 #Cases Manage Character
 
