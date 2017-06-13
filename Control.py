@@ -11,9 +11,6 @@ def addClass(currentUser):
     newClass = Class(name, currentUser)
     Persistence.saveClass(newClass)
 
-def searchClass(name):
-    displayClass(Persistence.getClass(name))
-
 def addAbility(currentClass):
     keep = 1
     while (keep == 1):
@@ -44,7 +41,7 @@ def duplicateClass():
     Persistence.saveClass(currentClass)
 
 def delClass():
-    currentClass = Vision.entry("Name of the class to be deleted: ")
+    currentClass = Vision.entry("ID of the class to be deleted: ")
     Persistence.delClass(currentClass)
 
 #Table
@@ -66,16 +63,12 @@ def caseAddC(currentTable):
     player = Persistence.getUser(playerName)
     charName = Vision.entry("Character name: ")
     char = player.getCharacter(charName)
-    table.addCharacter(currentUser, char)
-    Persistence.saveTable(currentTable)
+    Persistence.addCharToTable(player, charName, currentTable.getName())
 
 def caseDelC(currentTable):
-    playerName = Vision.entry("Player name: ")
-    player = Persistence.getUser(playerName)
     charName = Vision.entry("Character name: ")
     char = player.getCharacter(charName)
-    currentTable.delCharacter(currentUser, char)
-    Persistence.saveTable(currentTable)
+    Persistence.delCharFromTable(char, currentTable.getName())
 
 def caseAddP(currentTable):
     playerName = Vision.entry("Player name: ")
@@ -170,8 +163,5 @@ def caseShowInv():
     Inv = Character.getInventory()
     for item in Inv:
         Visio.display(item)
-
-def addUser(name, passw):
-    Persistence.saveUser(User(name, passw))
 
 caseManageCharacter = {'1' : caseUp, '2' : caseDown, '3' : caseGainXP, '4' : caseLoseXp, '5' : caseShowInv, '6' : caseAddInv, '7' : caseRemInv}
