@@ -11,6 +11,9 @@ def addClass(currentUser):
     newClass = Class(name, currentUser)
     Persistence.saveClass(newClass)
 
+def searchClass(name):
+    displayClass(Persistence.getClass(name))
+
 def addAbility(currentClass):
     keep = 1
     while (keep == 1):
@@ -167,5 +170,8 @@ def caseShowInv():
     Inv = Character.getInventory()
     for item in Inv:
         Visio.display(item)
+
+def addUser(name, passw):
+    Persistence.saveUser(User(name, passw))
 
 caseManageCharacter = {'1' : caseUp, '2' : caseDown, '3' : caseGainXP, '4' : caseLoseXp, '5' : caseShowInv, '6' : caseAddInv, '7' : caseRemInv}
