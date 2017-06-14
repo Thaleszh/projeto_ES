@@ -1,89 +1,172 @@
-classes = list()
-characters = list()
-tables = list()
-openTables = list()
-users = list()
+import sqlite3
+
+conn = sqlite3.connect('base.db')
+cursor  = conn.cursor()
+
+cursor.execute('DROP TABLE IF EXISTS classes')
+cursor.execute('DROP TABLE IF EXISTS characters')
+cursor.execute('DROP TABLE IF EXISTS users')
+cursor.execute('DROP TABLE IF EXISTS tables')
+cursor.execute('DROP TABLE IF EXISTS openTables')
+cursor.execute('DROP TABLE IF EXISTS char_user')
+cursor.execute('DROP TABLE IF EXISTS table_user')
+cursor.execute('DROP TABLE IF EXISTS char_table')
+
+cursor.execute("""
+ 	CREATE TABLE classes (
+		name VARCHAR(20),
+		creator INTEGER NOT NULL,
+		edition INTEGER NOT NULL,
+		id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+		FOREIGN KEY (creator) REFERENCES users(id)
+	); """)
+
+cursor.execute("""
+ 	CREATE TABLE characters (
+		name VARCHAR(20),
+		creator INTEGER NOT NULL,
+		edition INTEGER NOT NULL,
+		description VARCHAR(300),
+		id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+		FOREIGN KEY (creator) REFERENCES users(id)
+	); """)
+
+cursor.execute("""
+ 	CREATE TABLE tables (
+		name VARCHAR(20),
+		master INTEGER NOT NULL,
+		edition INTEGER NOT NULL,
+		id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+		FOREIGN KEY (master) REFERENCES users(id)
+	); """)
+
+cursor.execute("""
+ 	CREATE TABLE openTables (
+		table_id INTEGER NOT NULL,
+		id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+		FOREIGN KEY (table_id) REFERENCES tables(id)
+	); """)
+
+cursor.execute("""
+ 	CREATE TABLE users (
+		name VARCHAR(20),
+		password VARCHAR(20),
+		id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
+	); """)
+
+cursor.execute("""
+ 	CREATE TABLE table_user (
+		player_id INTEGER NOT NULL,
+		table_id INTEGER NOT NULL,
+		id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+		FOREIGN KEY (table_id) REFERENCES tables(id),
+		FOREIGN KEY (player_id) REFERENCES users(id)
+	); """)
+
+cursor.execute("""
+ 	CREATE TABLE char_table (
+		char_id INTEGER NOT NULL,
+		table_id INTEGER NOT NULL,
+		id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+		FOREIGN KEY (table_id) REFERENCES tables(id),
+		FOREIGN KEY (char_id) REFERENCES characters(id)
+	); """)
+
+cursor.execute("""
+ 	CREATE TABLE char_user (
+		char_id INTEGER NOT NULL,
+		user_id INTEGER NOT NULL,
+		id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+		FOREIGN KEY (char_id) REFERENCES characteres(id),
+		FOREIGN KEY (user_id) REFERENCES users(id)
+	); """)
 
 def saveClass(classToAdd):
-	if classToAdd not in classes:
-		classes.append(classToAdd)
-	else:
-		classes[classes.index(classToAdd)] = classToAdd
+	numId = cursor.execute("""(SELECT id FROM users WHERE name = ?);""", (classToAdd.getName))
+	cursor.execute("""(
+		INSERT OR IGNORE INTO classes (name, creator, edition, id) VALUES (?,?,?,?,?)
+	); """, (classToAdd.getName(), numId, 0, None))
 
 def getClass(name):
-	for classInList in classes:
-		if classInList.getName() == name:
-			return classInList
-	return "notFound"
+	result = cursor.execute("""(SELECT * FROM classes WHERE name = ?);""", (name))
+	return result
 
-def delClass(name):
-	for classInList in classes:
-		if classInList.getName() == name:
-			classes.remove(classInList)
-			break
+def delClass(ID):
+	cursor.execute("""(DELETE * FROM classes WHERE id = ?);""", (ID))
 
 def saveUser(userToAdd):
-	if userToAdd not in users:
-		users.append(userToAdd)
-	else:
-		users[users.index(userToAdd)] = userToAdd
+	cursor.execute("""(
+		INSERT OR IGNORE INTO users (name, password, id) VALUES (?,?,?)
+	); """, (userToAdd.getName(), userToAdd.getPassword(), None))
 
 def getUser(name):
-	for user in users:
-		if user.getName() == name:
-			return user
-	return "notFound"
+	result = cursor.execute("""(SELECT * FROM users WHERE name = ?);""", (name))
+	return result
 
-def delUser(name):
-	for user in users:
-		if users.getName() == name:
-			users.remove(user)
-			break
+def delUser(ID):
+	cursor.execute("""(DELETE * FROM users WHERE id = ?);""", (ID))
 
 def addOpenTable(table):
-	if table not in openTables:
-		openTables.append(table)
-	else:
-		openTables[openTables.index(table)] = table
+	numId = cursor.execute("""(SELECT id FROM tables WHERE name = ?);""", (table.getName))
+	cursor.execute("""(
+		INSERT OR IGNORE INTO openTables (table_id, id) VALUES (?,?)
+	); """, (numId, None))
 
-def delOpenTable(name):
-	for table in openTables:
-		if table.getName() == name:
-			openTables.remove(table)
-			break
+
+def delOpenTable(ID):
+	cursor.execute("""(DELETE * FROM openTables WHERE id = ?);""", (ID))
 
 def getTable(name):
-	for table in tables:
-		if table.getName() == name:
-			return table
-##	return "notFound"
+	result = cursor.execute("""(SELECT * FROM tables WHERE name = ?);""", (name))
+	return result
+
+def getTableID(name, master):
+    cursos.execute("""(SELECT id FROM tables WHERE name = ? AND master = ?));""", (name, master))
 
 def saveTable(table):
-	if table not in tables:
-		tables.append(table)
-	else:
-		tables[tables.index(table)] = table
+	name = table.getMaster()
+	numId = cursor.execute("""(SELECT id FROM users WHERE name = ?);""", (name))
+	cursor.execute("""(
+		INSERT OR IGNORE INTO users (name, creator, edition, id) VALUES (?,?,?,?)
+	); """, (table.getName(), numId, 0, None))
 
-def delTable(name):
-	for table in tables:
-		if table.getName() == name:
-			tables.remove(table)
-			break
+def delTable(ID):
+	cursor.execute("""(DELETE * FROM tables WHERE id = ?);""", (ID))
 
 def getCharacter(name):
-	for character in characters:
-		if character.getName() == name:
-			return character
-	return "notFound"
+	result = cursor.execute("""(SELECT * FROM characters WHERE name = ?);""", (name))
+	return result
 
 def saveCharacter(character):
-	if character not in characters:
-		characters.append(character)
-	else:
-		characters[characters.index(character)] = character
+		numId = cursor.execute("""(SELECT id FROM users WHERE name = ?);""", (character.getCreator()))
+		cursor.execute("""(
+			INSERT OR IGNORE INTO users (name, creator, edition, description, id) VALUES (?,?,?,?)
+		); """, (character.getName(), numId, character.getDescription(), None))
 
-def delCharacter(name):
-	for character in characters:
-		if characters.getName() == name:
-			characters.remove(character)
-			break
+def delCharacter(ID):
+	cursor.execute("""(DELETE * FROM characters WHERE id = ?);""", (ID))
+
+def addCharToTable(playerName, charName, tableName):
+    charId = cursor.execute("""(SELECT id FROM characters WHERE name = ? AND creator = ?);""", (charName, playerName))
+    tableId = cursor.execute("""(SELECT id FROM tables WHERE name = ?);""", (tableName))
+    cursor.execute("""(
+    	INSERT OR IGNORE INTO char_table (table_id, id) VALUES (?,?)
+    ); """, (tableId, charId, None))
+
+def delCharFromTable(charName, tableName):
+    charId = cursor.execute("""(SELECT id FROM characters WHERE name = ? AND creator = ?);""", (tableName, playerName))
+    tableId = cursor.execute("""(SELECT id FROM tables WHERE name = ?);""", (tableName))
+    cursor.execute("""(DELETE * FROM char_table WHERE table_id = ? AND char_id = ?);""", (tableId, charId))
+
+
+def addPlayertoTable(playerName, tableName):
+    playerId = cursor.execute("""(SELECT id FROM players WHERE name = ?);""", (playerName))
+    tableId = cursor.execute("""(SELECT id FROM tables WHERE name = ?);""", (tableNmae))
+    cursor.execute("""(
+    	INSERT OR IGNORE INTO user_table (table_id, id) VALUES (?,?)
+    ); """, (playerId, tableId, None))
+
+def delPlayerFromTable(playerName, tableName):
+    playerId = cursor.execute("""(SELECT id FROM players WHERE name = ? AND creator = ?);""", (playerName))
+    tableId = cursor.execute("""(SELECT id FROM tables WHERE name = ?);""", (tableName))
+    cursor.execute("""(DELETE * FROM char_table WHERE table_id = ? AND player_id = ?);""", (tableId, playerId))
