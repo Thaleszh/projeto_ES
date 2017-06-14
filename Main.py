@@ -30,9 +30,8 @@ while(True):
                 Vision.display('Wrong password. ' + str(tries) + ' tries remaining')
                 password = Vision.entry('Password: ')
                 tries -= 1
-            if tries < 0:
+            if tries <= 0:
                 sys.exit('Out of Tries')
-
     # new user
     elif option == 2:
         name = Vision.entry('Login: ')
@@ -65,7 +64,7 @@ while(True):
     while True:
         x = int(Vision.entry("\n1 - Add Class\n2 - Search Class\n3 - Add Ability\n"+
                              "4 - Create Table\n5 - Manage Table\n"+
-                             "6 - Create Character\n7 - Manage Character\n8 - Logout\n9 - Exit\n"))
+                             "6 - Create Character\n7 - Manage Character\n8 - Display Characters\n9 - Logout\n10 - Exit\n"))
         if x == 1:
             Control.addClass(currentUser)
         elif x == 2:
@@ -105,6 +104,8 @@ while(True):
                     item = Vision.entry('Item name: ')
                 Control.editCharacter(y, currentChar, currentUser, item)
         elif x == 8:
+            Control.displayCharacters(currentUser)
+        elif x == 9:
             break
         else:
             sys.exit('Goodbye')

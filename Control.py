@@ -117,7 +117,7 @@ def editLog(currentTable):
             currentTable.setLore(log)
             Persistence2.saveTable(currentTable)
 
-caseManageTable = {'0' : caseDisplayChar '1' : caseAddC, '2' : caseDelC, '3' : caseAddP, '4' : caseDelP, '5' : caseOpen, '6' : caseClose, '7' : editLog}
+caseManageTable = {'1' : caseAddC, '2' : caseDelC, '3' : caseAddP, '4' : caseDelP, '5' : caseOpen, '6' : caseClose, '7' : editLog}
 
 #Character
 
@@ -168,12 +168,34 @@ def caseRemInv(currentChar, currentUser, item):
 
 def caseShowInv(currentChar, currentUser, item):
     Inv = currentChar.getInventory()
-    for item in Inv:
-        Vision.display(item)
+    for it, index in enumerate(Inv):
+        Vision.display(str(it) + ' - '+ index)
+
+def caseDisplayChar(currentChar, currentUser, item):
+    Vision.display('- Character Sheet: -')
+    Vision.display('Name: '     + currentChar.getName())
+    Vision.display('Owner: '    + currentChar.getCreator().getName())
+    Vision.display('Class: '    + currentChar.getClass().getName())
+    Vision.display('Level: '    + str(currentChar.getLevel()))
+    Vision.display('Experience: ' + str(currentChar.getExperience()))
+    Vision.display('--- Description: ---')
+    Vision.display(currentChar.getDescription())
+    Vision.display('---- Atributes: ----')
+    attri = currentChar.getAtributes()
+    for atribute in attri:
+        Vision.display(atribute)
+    Vision.display('---- Inventory: ----')
+    caseShowInv(currentChar, currentUser, item)
 
 def addUser(name, passw):
     Persistence2.saveUser(User(name, passw))
 
-def caseDisplayChar
+def displayCharacters(user):
+    Vision.display('- Your Characters: -')
+    chars = user.getCharacters()
+    for char in chars:
+        Vision.display(char.getName())
 
-caseManageCharacter = {'1' : caseUp, '2' : caseDown, '3' : caseGainXP, '4' : caseLoseXp, '5' : caseShowInv, '6' : caseAddInv, '7' : caseRemInv}
+
+
+caseManageCharacter = {'0' : caseDisplayChar, '1' : caseUp, '2' : caseDown, '3' : caseGainXP, '4' : caseLoseXp, '5' : caseShowInv, '6' : caseAddInv, '7' : caseRemInv}

@@ -15,6 +15,7 @@ def addUsers():
     Control.addUser('Vania', 'tranquilo')
     Control.addUser('Stark', '123')
     Control.addUser('Vina', 'rainbow6')
+    Control.addUser('Luis', 'morte')
 
 def addClasses(user):
     tempClass = Class('Wizard', user)
@@ -35,6 +36,8 @@ def addCharacters(user):
     inventory.append('Cloak')
     inventory.append('Short Sword')
     tempChar.setInventory(user, inventory)
+    user.addCharacter(user, tempChar)
+    Persistence2.saveUser(user)
     Persistence2.saveCharacter(tempChar)
 
 
