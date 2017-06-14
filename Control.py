@@ -19,7 +19,7 @@ def addAbility(currentClass):
     while (keep == 1):
         abilityName = Vision.entry("Ability name: ")
         abilityDescription = Vision.entry("Ability Description: ")
-        currentClass.addAbility(currentUser, abilityName, abilityDescription)
+        currentClass.addAbility(abilityName, abilityDescription)
         keep = int(Vision.entry("Do you wish to keep adding abilities?\n 1- Yes \n 2- No\n"))
     Persistence.saveClass(currentClass)
 
@@ -62,36 +62,24 @@ def editTable(option, currentTable):
 
 # cases Manage Table
 def caseAddC(currentTable):
-    playerName = Vision.entry("Player name: ")
-    player = Persistence.getUser(playerName)
     charName = Vision.entry("Character name: ")
-    char = player.getCharacter(charName)
-    table.addCharacter(currentUser, char)
-    Persistence.saveTable(currentTable)
+    Persistence.addCharToTable(charName, currentTable.getName())
 
 def caseDelC(currentTable):
-    playerName = Vision.entry("Player name: ")
-    player = Persistence.getUser(playerName)
     charName = Vision.entry("Character name: ")
-    char = player.getCharacter(charName)
-    currentTable.delCharacter(currentUser, char)
-    Persistence.saveTable(currentTable)
+    Persistence.delCharFromTable(charName, currentTable.getName())
 
 def caseAddP(currentTable):
     playerName = Vision.entry("Player name: ")
-    player = Persistence.getUser(playerName)
-    currentTable.addPlayer(currentUser, player)
-    Persistence.saveTable(currentTable)
+    Persistence.addPlayerToTable(playerName, currentTable.getName())
 
 def caseDelP(currentTable):
     playerName = Vision.entry("Player name: ")
-    player = Persistence.getUser(playerName)
-    currentTable.delPlayer(currentUser, player)
-    Persistence.saveTable(currentTable)
+    Persistence.delPlayerFromTable(playerName, currentTable.getName())
 
 def caseOpen(currentTable):
     name = currentTable.getName()
-    Persistence.addOpenTable(table)
+    Persistence.addOpenTable(currentTable)
 
 def caseClose(currentTable):
     name = currentTable.getName()
@@ -124,7 +112,7 @@ caseManageTable = {'1' : caseAddC, '2' : caseDelC, '3' : caseAddP, '4' : caseDel
 def addCharacter(currentUser):
     name = Vision.entry("Character name: ")
     className = Vision.entry("Character Class: ")
-    currentClass = Persistence.getClass(currentClassName)
+    currentClass = Persistence.getClass(className)
     char = Character(name, currentClass, currentUser)
     currentUser.addCharacter(currentUser, char)
     Persistence.saveUser(currentUser)
@@ -143,7 +131,10 @@ def editCharacter(option, currentChar, currentUser, item):
 #Cases Manage Character
 
 def caseUp(currentChar, currentUser, item):
-    currentChar.gainLevel(currentUser)
+    name = currentChar.getName()
+    level = currentChar.getLevel()
+    level = level + 1
+    Persistence.cursor.execute("""UPDATE characters SET level = ? WHERE name = ?;""", (level, name))
     Persistence.saveCharacter(currentChar)
 
 def caseDown(currentChar, currentUser, item):
@@ -151,11 +142,11 @@ def caseDown(currentChar, currentUser, item):
     Persistence.saveCharacter(currentChar)
 
 def caseGainXP(currentChar, currentUser, number):
-    currentChar.addExperience(number)
+    currentChar.addExperience(currentUser, int(number))
     Persistence.saveCharacter(currentChar)
 
 def caseLoseXp(currentChar, currentUser, number):
-    currentChar.loseExperience(number)
+    currentChar.loseExperience(currentUser, int(number))
     Persistence.saveCharacter(currentChar)
 
 def caseAddInv(currentChar, currentUser, item):
@@ -168,10 +159,34 @@ def caseRemInv(currentChar, currentUser, item):
 
 def caseShowInv(currentChar, currentUser, item):
     Inv = currentChar.getInventory()
-    for item in Inv:
-        Visio.display(item)
+    for it, index in enumerate(Inv):
+        Vision.display(str(it) + ' - '+ index)
+
+def caseDisplayChar(currentChar, currentUser, item):
+    Vision.display('- Character Sheet: -')
+    Vision.display('Name: '     + currentChar.getName())
+    Vision.display('Owner: '    + currentChar.getCreator().getName())
+    Vision.display('Class: '    + currentChar.getClass().getName())
+    Vision.display('Level: '    + str(currentChar.getLevel()))
+    Vision.display('Experience: ' + str(currentChar.getExperience()))
+    Vision.display('--- Description: ---')
+    Vision.display(currentChar.getDescription())
+    Vision.display('---- Atributes: ----')
+    attri = currentChar.getAtributes()
+    for atribute in attri:
+        Vision.display(atribute)
+    Vision.display('---- Inventory: ----')
+    caseShowInv(currentChar, currentUser, item)
 
 def addUser(name, passw):
     Persistence.saveUser(User(name, passw))
 
-caseManageCharacter = {'1' : caseUp, '2' : caseDown, '3' : caseGainXP, '4' : caseLoseXp, '5' : caseShowInv, '6' : caseAddInv, '7' : caseRemInv}
+def displayCharacters(user):
+    Vision.display('- Your Characters: -')
+    chars = user.getCharacters()
+    for char in chars:
+        Vision.display(char.getName())
+
+
+
+caseManageCharacter = {'0' : caseDisplayChar, '1' : caseUp, '2' : caseDown, '3' : caseGainXP, '4' : caseLoseXp, '5' : caseShowInv, '6' : caseAddInv, '7' : caseRemInv}

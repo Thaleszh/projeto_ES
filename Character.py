@@ -7,9 +7,7 @@ class Character:
     def __init__(self, name, clas, user):
         self.name = name
         self.creator = user
-        self.tags = set()
         self.edition = 0
-        self.atributes = list()
         self.inventory = list()
         self.description = ""
         self.level = 1
@@ -43,14 +41,6 @@ class Character:
 
     def getTags(self):
         return tags
-
-#change atributes
-    def setAtributes(self, user, atributes):
-        if (self.checkPermition(user)):
-            self.atributes = atributes
-
-    def getAtributes(self):
-        return self.atributes
 
 #change experience
     def setExperience(self, user, value):
@@ -124,3 +114,6 @@ class Character:
 
     def checkCreator(self, user):
         return self.creator == user
+
+    def getClass(self):
+        return clas

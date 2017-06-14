@@ -5,9 +5,7 @@ class Class:
 	def __init__(self, name, user):
 		self.name = name
 		self.creator = user
-		self.tags = set()
 		self.edition = 0
-		self.colaborators = set()
 		self.abilities = list()
 
 #add a name
@@ -26,25 +24,9 @@ class Class:
 			self.tags.discard(tag)
 
 #add an ability with its description
-	def addAbility(self, user, abilityName, description):
-		if (self.checkPermition(user)):
-			newAbility = Ability(abilityName, description)
-			self.abilities.append(newAbility)
-
-	def editAbility(self, user, abilityName, description):
-		if (self.checkPermition(user)):
-			ability = searchAbility(abilityName)
-			ability.setDescription(description)
-
-	def delAbility(self, user, abilityName):
-		if (self.checkPermition(user)):
-			ability = searchAbility(abilityName)
-			self.abilities.remove(ability)
-
-	def searchAbility(self, abilityName):
-		for ability in self.abilities:
-			if ability.getName() == abilityName:
-				return ability
+	def addAbility(self, abilityName, description):
+		newAbility = Ability(abilityName, description)
+		self.abilities.append(newAbility)
 
 	def getAbilities(self):
 		return self.abilities
