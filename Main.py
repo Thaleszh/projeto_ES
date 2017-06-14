@@ -58,13 +58,14 @@ while(True):
     currentClass = Class('wiz', currentUser)
     currentChar = Character('nome', currentClass, currentUser)
     currentTable = Table('mesa', currentUser)
+    item = ''
 
     Persistence.saveClass(currentClass)
 
     while True:
         x = int(Vision.entry("\n1 - Add Class\n2 - Search Class\n3 - Add Ability\n"+
                              "4 - Create Table\n5 - Manage Table\n"+
-                             "6 - Create Character\n7 - Manage Character\n8 - Logout\n 9 - Exit"))
+                             "6 - Create Character\n7 - Manage Character\n8 - Logout\n9 - Exit\n"))
         if x == 1:
             Control.addClass(currentUser)
         elif x == 2:
