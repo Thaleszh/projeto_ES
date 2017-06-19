@@ -110,6 +110,10 @@ class Character:
     def getDescription(self):
         return self.description
 
+# class
+    def getClass(self):
+        return self.clas
+
 #check if the user has permition
     def checkPermition(self, user):
         if(self.edition):
